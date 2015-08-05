@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Poll = require('../api/poll/poll.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -33,7 +34,7 @@ Thing.find({}).remove(function() {
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
+    name: 'testuser',
     email: 'test@test.com',
     password: 'test'
   }, {
@@ -46,4 +47,29 @@ User.find({}).remove(function() {
       console.log('finished populating users');
     }
   );
+});
+
+Poll.find({}).remove(function() {
+  Poll.create({
+    name: "TestPoll",
+    body: "Who's the better user?",
+    dateCreated: Date.now(),
+    author: "55c170c6284ea64d2c29b3eb",
+    answers: [{answer: "TestUser", votes: 1}, {answer: "Admin", votes: 2}],
+    hiddenFromPublic: false
+  }, {
+    name: "TestPoll",
+    body: "What's up?",
+    dateCreated: Date.now(),
+    author: "55c170c6284ea64d2c29b3eb",
+    answers: [{answer: "Nothing Much", votes: 1}, {answer: "Everything!", votes: 2}],
+    hiddenFromPublic: false
+  }, {
+    name: "TestPoll",
+    body: "Can You See Me?",
+    dateCreated: Date.now(),
+    author: "TestUser",
+    answers: [{answer: "Yes", votes: 1}, {answer: "no", votes: 0}],
+    hiddenFromPublic: true
+  });
 });
