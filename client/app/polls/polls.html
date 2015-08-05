@@ -1,0 +1,8 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+    <div class="col-md-6" ng-repeat="poll in pollsByUser">
+        <h2>{{poll.name}}</h2>
+        <p>{{poll.body}}</p>
+    </div>
+</div>
