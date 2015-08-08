@@ -51,25 +51,22 @@ User.find({}).remove(function() {
 
 Poll.find({}).remove(function() {
   Poll.create({
-    name: "TestPoll",
-    body: "Who's the better user?",
+    question: "Who's the better user?",
     dateCreated: Date.now(),
     author: "55c170c6284ea64d2c29b3eb",
-    answers: [{answer: "TestUser", votes: 1}, {answer: "Admin", votes: 2}],
+    answers: [{answer: "TestUser", votes: []}, {answer: "Admin", votes: [{user: "55c170c6284ea64d2c29b3eb"}]}],
     hiddenFromPublic: false
   }, {
-    name: "TestPoll",
-    body: "What's up?",
+    question: "What's up?",
     dateCreated: Date.now(),
     author: "55c170c6284ea64d2c29b3eb",
-    answers: [{answer: "Nothing Much", votes: 1}, {answer: "Everything!", votes: 2}],
+    answers: [{answer: "Nothing Much", votes: [{user: "55c170c6284ea64d2c29b3eb"}]}, {answer: "Everything!", votes: [{}]}],
     hiddenFromPublic: false
   }, {
-    name: "TestPoll",
-    body: "Can You See Me?",
+    question: "Can You See Me?",
     dateCreated: Date.now(),
     author: "TestUser",
-    answers: [{answer: "Yes", votes: 1}, {answer: "no", votes: 0}],
+    answers: [{answer: "Yes", votes: [{user: "55c170c6284ea64d2c29b3eb"}]}, {answer: "no", votes: [{}]}],
     hiddenFromPublic: true
   });
 });
