@@ -58,9 +58,28 @@ exports.destroy = function(req, res) {
 exports.indexUser = function(req, res) {
     Poll.find({author:req.params.userid}, function (err, polls) {
         if(err) { return handleError(res, err); }
-        res.json(200, polls);
+        res.status(200).json(polls);
     });
 };
+
+// Adds a vote to a poll in the DB.  req.body should be a user's ID
+exports.addVote = function(req, res) {
+  var pollId = req.params.id;
+  var answerId = req.params.answerIndex;
+  Poll.findById(pollId, function (err, poll) {
+    if (err) { return handleError(res, err); }
+    if (!poll) { return res.status(404).send('Poll Not Found'); }
+    if (!poll.answers[answerId]) { return res.status(404).send('Poll Not Found'); }
+
+    var updated = _.extend({}, poll);
+    updated.answers[answerId].votes.push(req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(poll);
+    });
+
+  })
+}
 
 function handleError(res, err) {
   return res.status(500).send(err);

@@ -12,5 +12,6 @@ router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 router.get('/user/:userid', controller.indexUser);
+router.put('/:id/:answerIndex/', controller.addVote);
 
 module.exports = router;

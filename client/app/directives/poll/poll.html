@@ -1,4 +1,9 @@
-<div>
-    <a href="/poll/{{poll._id}}" class="h4">{{poll.name}}</a><br>
-    {{poll.body}}<br>
+<a ng-show="{{linkable}}" href="/poll/{{poll._id}}" class="h4">{{poll.question}}</a><br>
+<span class="h4" ng-hide="{{linkable}}">{{poll.question}}</span>
+
+<div ng-hide="{{votable}}" ng-repeat="answer in poll.answers">
+  {{answer.answer}}
+</div>
+<div ng-show="{{votable}}" ng-repeat="answer in poll.answers">
+  Votable Answers will go here
 </div>

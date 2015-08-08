@@ -1,0 +1,28 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="col-md-12 text-center">
+  <poll poll-object="poll"></poll>
+</div>
+<div class="container">
+  <form ng-submit="saveNewPoll()">
+    <div class="form-group">
+      <label for="poll-question" class="control-label">Question</label>
+      <span ng-if="poll.question.length">{{charsLeft(poll.question, 140)}}</span>
+      <input required ng-model="poll.question" type="text" class="form-control" id="poll-question" placeholder="Peanut-butter or Jelly?">
+    </div>
+    <div class="form-group" ng-repeat="answer in poll.answers">
+      <label for="poll-answer-{{$index + 1}}" class="control-label">Answer {{$index + 1}}</label>
+      <a href="#" tabindex="-1" ng-click="addAnswer($index)"><span class="glyphicon glyphicon-plus"></span></a>
+      <a href="#" tabindex="-1" ng-click="removeAnswer($index)" ng-show="poll.answers.length > 2"><span class="glyphicon glyphicon-remove"></span></a>
+      <span ng-if="answer.answer.length">{{charsLeft(answer.answer, 140)}}</span>
+      <input required ng-model="answer.answer" type="text" class="form-control" id="poll-answer-{{$index + 1}}" placeholder="Answer {{$index + 1}}">
+    </div>
+    <div class="checkbox">
+      <label>
+        <input ng-model="poll.hiddenFromPublic" type="checkbox"> Private (share by URL only)
+      </label>
+    </div>
+    <button ng-hide="poll._id" type="submit" class="btn btn-primary">Publish</button>
+    <a ng-show="poll._id" href="/poll/{{poll._id}}" class="btn btn-primary">See your poll!</a>
+  </form>
+</div>

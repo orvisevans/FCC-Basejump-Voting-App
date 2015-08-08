@@ -4,11 +4,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var PollSchema = new Schema({
-  name: String,
-  body: String,
+  question: String,
   dateCreated: Date,
   author: String,
-  answers: [{answer: String, votes: Number}],
+  answers: [{answer: String, votes: [{user: String}]}],
   hiddenFromPublic: {type: Boolean, default: false}
 });
 
