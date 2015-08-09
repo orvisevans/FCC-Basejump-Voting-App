@@ -2,7 +2,6 @@
 
 angular.module('workspaceApp')
   .controller('CreatePollCtrl', function ($scope, $http, Auth, User) {
-    $scope.pollDirectiveNotLinkable = true;
     $scope.poll = {};
     $scope.poll.answers = [{answer: '', votes: []}, {answer: '', votes: []}];
     $scope.poll._id;
