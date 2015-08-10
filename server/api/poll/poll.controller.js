@@ -65,14 +65,15 @@ exports.indexUser = function(req, res) {
 // Adds a vote to a poll in the DB.  req.body should be a user's ID
 exports.addVote = function(req, res) {
   var pollId = req.params.id;
-  var answerId = req.params.answerIndex;
+  var user = req.body.user;
+  var answerIndex = req.body.answerIndex;
   Poll.findById(pollId, function (err, poll) {
     if (err) { return handleError(res, err); }
     if (!poll) { return res.status(404).send('Poll Not Found'); }
-    if (!poll.answers[answerId]) { return res.status(404).send('Poll Not Found'); }
+    if (!poll.answers[answerIndex]) { return res.status(404).send('Answer Not Found'); }
 
     var updated = _.extend({}, poll);
-    updated.answers[answerId].votes.push(req.body);
+    updated._doc.answers[answerIndex].votes.push(req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(poll);
