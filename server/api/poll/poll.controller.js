@@ -65,16 +65,23 @@ exports.indexUser = function(req, res) {
 // Adds a vote to a poll in the DB.  req.body should be a user's ID
 exports.addVote = function(req, res) {
   var pollId = req.params.id;
-  var user = req.body.user;
+  var userId = req.body.user;
   var answerIndex = req.body.answerIndex;
   Poll.findById(pollId, function (err, poll) {
+    //check for errors
     if (err) { return handleError(res, err); }
     if (!poll) { return res.status(404).send('Poll Not Found'); }
     if (!poll.answers[answerIndex]) { return res.status(404).send('Answer Not Found'); }
 
-    var updated = _.extend({}, poll);
-    updated._doc.answers[answerIndex].votes.push(req.body);
-    updated.save(function (err) {
+    //create a copy of the poll
+    var updatedPoll = _.extend({}, poll);
+
+    //check if user has voted already.  If so, remove all other votes by the user before voting.
+    updatedPoll = removeVotesbyUser(updatedPoll, userId);
+
+    //register vote and save
+    updatedPoll._doc.answers[answerIndex].votes.push({user: userId});
+    updatedPoll.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(poll);
     });
@@ -84,4 +91,14 @@ exports.addVote = function(req, res) {
 
 function handleError(res, err) {
   return res.status(500).send(err);
+}
+
+function removeVotesbyUser(poll, userId) {
+  poll._doc.answers = poll._doc.answers.map(function(answer) {
+    answer.votes = answer.votes.filter(function(vote) {
+      return vote.user !== userId;
+    });
+    return answer;
+  });
+  return poll;
 }
