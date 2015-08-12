@@ -3,6 +3,6 @@
   <span class="h4" ng-hide="{{linkable}}">{{poll.question}}</span>
 
   <div ng-click="voteFor($index)" style="cursor:pointer" class="poll-answer" ng-repeat="answer in poll.answers">
-    {{answer.votes.length}} - {{answer.answer}}
+    <span ng-hide="{{hideTally}}">{{answer.votes.length}} votes - </span>{{answer.answer}}
   </div>
 </div>

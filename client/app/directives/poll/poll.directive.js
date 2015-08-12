@@ -8,6 +8,7 @@ angular.module('workspaceApp')
       scope: {
         votable: "@",
         linkable: "@",
+        hideTally: "@",
         poll: "=pollObject"
       },
       link: function (scope, element, attrs) {
@@ -18,9 +19,20 @@ angular.module('workspaceApp')
           } else {
             var vote = {answerIndex: answerIndex, user: userId};
             $http.put('/api/polls/' + scope.poll._id + '/add-vote', vote);
-            scope.poll.answers[answerIndex].votes.push(vote);
+            removeVotesbyUser(scope.poll, userId);
+            scope.poll.answers[answerIndex].votes.push({user: userId});
           }
         }
       }
     };
   });
+
+  function removeVotesbyUser(poll, userId) {
+    poll.answers = poll.answers.map(function(answer) {
+      answer.votes = answer.votes.filter(function(vote) {
+        return vote.user !== userId;
+      });
+      return answer;
+    });
+    return poll;
+  }
