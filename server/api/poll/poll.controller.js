@@ -3,9 +3,9 @@
 var _ = require('lodash');
 var Poll = require('./poll.model');
 
-// Get list of polls
+// Get list of public polls
 exports.index = function(req, res) {
-  Poll.find(function (err, polls) {
+  Poll.find({hiddenFromPublic: false}, function (err, polls) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(polls);
   });
@@ -56,7 +56,12 @@ exports.destroy = function(req, res) {
 
 // Returns polls by a user in the DB.
 exports.indexUser = function(req, res) {
-    Poll.find({author:req.params.userid}, function (err, polls) {
+  var filter = {author:req.params.userid};
+  //hide polls where hiddenFromPublic === true unless sent showHiddenFromPublic === true
+  if (!req.body.showHiddenFromPublic) {
+    filter.hiddenFromPublic = false;
+  }
+    Poll.find(filter, function (err, polls) {
         if(err) { return handleError(res, err); }
         res.status(200).json(polls);
     });
