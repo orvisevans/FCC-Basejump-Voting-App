@@ -4,7 +4,6 @@ angular.module('workspaceApp')
   .controller('CreatePollCtrl', function ($scope, $http, Auth, User, $location) {
     $scope.poll = {};
     $scope.poll.answers = [{answer: '', votes: []}, {answer: '', votes: []}];
-    $scope.poll._id;
 
     //redirect to login if not logged in.
     if (!Auth.getCurrentUser().name) {
@@ -17,15 +16,15 @@ angular.module('workspaceApp')
       } else {
         return '' + (field.length - maxChars) + ' too many characters';
       }
-    }
+    };
 
     $scope.addAnswer = function (atIndex) {
-      $scope.poll.answers.splice(atIndex + 1, 0, {answer: '', votes: []})
-    }
+      $scope.poll.answers.splice(atIndex + 1, 0, {answer: '', votes: []});
+    };
 
     $scope.removeAnswer = function (atIndex) {
       $scope.poll.answers.splice(atIndex, 1);
-    }
+    };
 
     $scope.saveNewPoll = function () {
       var newPoll = $scope.poll;
@@ -38,5 +37,5 @@ angular.module('workspaceApp')
       }).success(function(data) {
         $scope.poll._id = data._id;
       });
-    }
+    };
   });
