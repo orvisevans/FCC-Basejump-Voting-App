@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .controller('CreatePollCtrl', function ($scope, $http, Auth, User) {
+  .controller('CreatePollCtrl', function ($scope, $http, Auth, User, $location) {
     $scope.poll = {};
     $scope.poll.answers = [{answer: '', votes: []}, {answer: '', votes: []}];
     $scope.poll._id;
+
+    //redirect to login if not logged in.
+    if (!Auth.getCurrentUser().name) {
+      $location.path('/login');
+    }
 
     $scope.charsLeft = function (field, maxChars) {
       if (field.length <= maxChars) {
