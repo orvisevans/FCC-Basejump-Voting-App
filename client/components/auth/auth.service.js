@@ -102,6 +102,23 @@ angular.module('workspaceApp')
       },
 
       /**
+       * Waits for currentUser to resolve before getting currentUser info
+       */
+      getCurrentUserAsync: function(cb) {
+        if(currentUser.hasOwnProperty('$promise')) {
+          currentUser.$promise.then(function() {
+            cb(currentUser);
+          }).catch(function() {
+            cb(false);
+          });
+        } else if(currentUser.hasOwnProperty('role')) {
+          cb(currentUser);
+        } else {
+          cb(false);
+        }
+      },
+
+      /**
        * Check if a user is logged in
        *
        * @return {Boolean}
