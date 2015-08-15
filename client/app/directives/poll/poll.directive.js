@@ -12,6 +12,19 @@ angular.module('workspaceApp')
         poll: "=pollObject"
       },
       link: function (scope, element, attrs) {
+        scope.loggedIn = function () {
+          return Auth.getCurrentUser().name ? true : false;
+        }
+        scope.votedFor = function (answerIndex) {
+          var user = Auth.getCurrentUser()._id;
+          if (user) {
+            var votedForThis = false;
+            scope.poll.answers[answerIndex].votes.forEach(function(vote) {
+              if (vote.user === user) { votedForThis = true; }
+            });
+            return votedForThis;
+          }
+        }
         scope.voteFor = function (answerIndex) {
           var userId = Auth.getCurrentUser()._id;
           if (!userId) {

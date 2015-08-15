@@ -1,0 +1,16 @@
+ul {
+  padding-left: 25px;
+}
+
+.poll-answer {
+  display: block;
+}
+
+.poll-answer-votable{
+  cursor: pointer;
+}
+
+.poll-answer-votable:hover {
+  background-color: #4393B9;
+  color: #F5F5F5;
+}
