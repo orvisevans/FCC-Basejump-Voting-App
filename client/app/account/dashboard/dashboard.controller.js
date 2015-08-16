@@ -1,4 +1,5 @@
 'use strict';
+/* globals confirm, angular */
 
 angular.module('workspaceApp')
   .controller('DashboardCtrl', function ($scope, $http, $location, Auth) {
@@ -14,7 +15,7 @@ angular.module('workspaceApp')
       if (confirm('Are you sure you want to delete this poll?')) {
         $http.delete('/api/polls/' + poll._id);
         $scope.myPolls = $scope.myPolls.filter(function(filterPoll) {
-          return poll !== filterPoll
+          return poll !== filterPoll;
         });
       }
     };
