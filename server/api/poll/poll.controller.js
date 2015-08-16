@@ -56,11 +56,16 @@ exports.destroy = function(req, res) {
 
 // Returns polls by a user in the DB.
 exports.indexUser = function(req, res) {
+  var filter = {author:req.params.userid, hiddenFromPublic: false};
+    Poll.find(filter, function (err, polls) {
+        if(err) { return handleError(res, err); }
+        res.status(200).json(polls);
+    });
+};
+
+// Returns polls by a user in the DB.
+exports.indexUserWithHidden = function(req, res) {
   var filter = {author:req.params.userid};
-  //hide polls where hiddenFromPublic === true unless sent showHiddenFromPublic === true
-  if (!req.body.showHiddenFromPublic) {
-    filter.hiddenFromPublic = false;
-  }
     Poll.find(filter, function (err, polls) {
         if(err) { return handleError(res, err); }
         res.status(200).json(polls);

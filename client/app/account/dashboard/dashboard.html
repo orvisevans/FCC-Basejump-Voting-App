@@ -1,0 +1,16 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  {{getCurrentUser()}}
+    <div class="row" ng-repeat="poll in myPolls" ng-mouseenter="showOptions=true" ng-mouseleave="showOptions=false">
+        <div  class="col-xs-10">
+          <poll poll-object="poll" linkable="true"></poll>
+        </div>
+        <div ng-show="showOptions" class="col-xs-2">
+          <span ng-click="delete(poll)" class="option-button text-danger glyphicon glyphicon-remove"></span>
+          <span ng-click="edit(poll)" class="option-button text-success glyphicon glyphicon-edit"></span>
+          <span ng-click="toggleVisibility(poll)" ng-show="poll.hiddenFromPublic" class="option-button text-primary glyphicon glyphicon-eye-close"></span>
+          <span ng-click="toggleVisibility(poll)" ng-hide="poll.hiddenFromPublic" class="option-button text-primary glyphicon glyphicon-eye-open"></span>
+        </div>
+    </div>
+</div>

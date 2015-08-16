@@ -33,7 +33,7 @@ angular.module('workspaceApp')
         dateCreated: Date.now(),
         author: Auth.getCurrentUser(),
         answers: newPoll.answers,
-        hiddenFromPublic: false
+        hiddenFromPublic: newPoll.hiddenFromPublic
       }).success(function(data) {
         $scope.poll._id = data._id;
       });
