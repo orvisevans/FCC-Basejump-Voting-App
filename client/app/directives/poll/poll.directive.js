@@ -44,6 +44,12 @@ angular.module('workspaceApp')
             scope.poll.answers[answerIndex].votes.push({user: userId});
           }
         };
+        scope.totalVotes = 0;
+        scope.poll.answers.forEach(function(answer) {
+          scope.totalVotes += answer.votes.length;
+        });
+
+        scope.hideTally = true;
       }
     };
   });

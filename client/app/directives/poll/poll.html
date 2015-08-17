@@ -1,13 +1,28 @@
-<div class="poll-wrapper">
+<div class="poll-wrapper" ng-mouseenter="showSocial = true" ng-mouseleave="showSocial=false">
   <a ng-show="{{linkable}}" href="/poll/{{poll._id}}" class="h4">{{poll.question}}</a><br>
   <span class="h4" ng-hide="{{linkable}}">{{poll.question}}</span>
+  <div class="social-wrapper pull-right" ng-show="showSocial">
+    <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-url="http://oe-fcc-voter.heroku.com/poll/{{poll._id}}">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <div class="fb-share-button" data-href="http://oe-fcc-voter.heroku.com/poll/{{poll._id}}" data-layout="button"></div>
+  </div>
 
   <ul ng-if="loggedIn()">
     <li ng-click="voteFor($index)" class="poll-answer poll-answer-votable" ng-repeat="answer in poll.answers">
+      <div class="bar-graph pull-left" style="width: {{(answer.votes.length / totalVotes)*100}}%">.</div>
       <span class="glyphicon glyphicon-unchecked" ng-hide="votedFor($index)" aria-hidden="true"></span>
       <span class="glyphicon glyphicon-check" ng-show="votedFor($index)" aria-hidden="true"></span>
       <span ng-hide="{{hideTally}}">{{answer.votes.length}} vote<span ng-hide="answer.votes.length === 1">s</span> - </span>
       {{answer.answer}}
+
     </li>
   </ul>
   <ul ng-if="!loggedIn()">

@@ -14,3 +14,19 @@ ul {
   background-color: #4393B9;
   color: #F5F5F5;
 }
+
+.bar-graph {
+  background-color: rgba(67, 147, 185, 0.1);
+  position: relative;
+  z-index: -1;
+  display:inline;
+  margin-right:-100%;
+}
+
+.social-wrapper {
+  display: inline-block;
+  position: relative;
+  top: -22px;
+  z-index: 10;
+  background-color: white;
+}
